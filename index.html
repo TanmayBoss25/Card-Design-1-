@@ -1,158 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buggati Chiron</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bugatti Chiron</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-    <style>
-        body {
-            background-color: rgb(0, 0, 0);
-        }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .parent {
-            background-color: rgb(225, 252, 253);
-            border: 3px solid rgb(255, 255, 255);
-            height: 600px;
-            padding: 50px;
-            margin-top: 100px;
-            width: 350px;
-            position: relative;
-            left: 600px;
-            border-radius: 5px;
-            bottom: 40px;
-        }
+  body {
+    background: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+  }
 
-        .secondparent {
-            background-color: white;
-            border: 2px solid rgb(182, 182, 182);
-            height: 600px;
-            border-radius: 15px;
-        }
-        .about {
-            height: 200px;
-            width: 300px;
-            font-size: 19px;
-            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            color: rgb(124, 124, 124);
-            box-sizing: border-box;
-            border: 1px solid rgb(255, 255, 255);
-            overflow-y: scroll;
-            position: relative;
-            left: 15px;
-            top: 150px;
-        }
-        .heading { 
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            position : relative;
-            left: 20px;
-            top: 170px;
-        }
-        .specificity_1 {
-            font-weight: bold;
-            color: rgb(124, 124, 124);
-            font-size: 13px;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            position : relative;
-            left: 20px;
-            top: 210px;
-            border: 1px solid rgb(177, 177, 177);
-            width: 80px;
-            height: 40px;
-            text-align: center;
-            border-radius: 50px;
-        }
-        .specificity_2 {
-            font-weight: bold;
-            color: rgb(124, 124, 124);
-            font-size: 13px;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            position : relative;
-            left: 120px;
-            top: 170px;
-            border: 1px solid rgb(177, 177, 177);
-            width: 80px;
-            height: 40px;
-            text-align: center;
-            border-radius: 50px;
-           
-        }    
-        .scroll {
-            position: relative;
-            left: 80px;
-            top: 165px;
-            border: 0.2px solid rgb(188, 249, 255);
-            background-color: rgb(0, 195, 255);
-            color: rgb(0, 26, 255);
-            width: 150px;
-            height: 40px;
-            text-align: center;
-            border-radius: 50px;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            font-size: 13px;
-            font-weight: bold;
-            box-shadow: 5px 5px 50px rgb(0, 166, 255);
-        }
-        .car {
-            background-image: url("chiron-sport-og.jpg");
-            background-size: cover;
-            height: 170px;
-            width: 300px;
-            position: relative;
-            left: 25px;
-            top: 20px;
-            border-radius: 15px;
-            box-shadow: 5px 5px 50px rgb(255, 0, 0);
-        }
-        
-    </style>
+  .scene {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Ambient glow behind card */
+  .glow-bg {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(ellipse at 40% 60%, rgba(180, 140, 50, 0.12) 0%, transparent 65%),
+                radial-gradient(ellipse at 70% 30%, rgba(200, 30, 30, 0.08) 0%, transparent 55%);
+    border-radius: 50%;
+    filter: blur(30px);
+    pointer-events: none;
+    animation: pulseGlow 4s ease-in-out infinite alternate;
+  }
+  @keyframes pulseGlow {
+    from { opacity: 0.7; transform: scale(0.95); }
+    to   { opacity: 1;   transform: scale(1.05); }
+  }
+
+  /* Card */
+  .card {
+    width: 360px;
+    background: linear-gradient(160deg, #141414 0%, #0d0d0d 100%);
+    border: 1px solid rgba(180, 145, 55, 0.25);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.04),
+      0 25px 60px rgba(0,0,0,0.7),
+      inset 0 1px 0 rgba(255,255,255,0.06);
+    animation: cardIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Top image zone */
+  .image-zone {
+    position: relative;
+    height: 210px;
+    overflow: hidden;
+  }
+  .car-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.85) contrast(1.1) saturate(1.1);
+    transition: transform 0.6s cubic-bezier(0.22,1,0.36,1), filter 0.6s ease;
+  }
+  .card:hover .car-img {
+    transform: scale(1.04);
+    filter: brightness(0.95) contrast(1.1) saturate(1.2);
+  }
+
+  /* Gradient overlay on image bottom */
+  .image-fade {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, #0d0d0d);
+    pointer-events: none;
+  }
+
+  /* Badge strip on image */
+  .badges {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    display: flex;
+    gap: 8px;
+  }
+  .badge {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    animation: badgeIn 0.8s 0.3s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  @keyframes badgeIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  .badge-hyper { background: rgba(180, 30, 30, 0.55); }
+  .badge-luxury { background: rgba(180, 145, 55, 0.45); color: #f5d97a; }
+
+  /* Content area */
+  .content {
+    padding: 18px 22px 22px;
+    animation: fadeUp 0.8s 0.2s both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .brand {
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #b4922e;
+    margin-bottom: 4px;
+  }
+
+  .title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: #f5f0e8;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+  .title span {
+    font-style: italic;
+    font-weight: 600;
+    color: #d4a83a;
+  }
+
+  /* Stats row */
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .stat {
+    background: rgba(255,255,255,0.03);
+    padding: 10px 8px;
+    text-align: center;
+    transition: background 0.2s;
+  }
+  .stat:hover { background: rgba(180,145,55,0.08); }
+  .stat-val {
+    font-size: 17px;
+    font-weight: 700;
+    color: #f0e6c8;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .stat-unit {
+    font-size: 9px;
+    font-weight: 600;
+    color: #b4922e;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .stat-label {
+    font-size: 8.5px;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(180,145,55,0.3), transparent);
+    margin-bottom: 14px;
+  }
+
+  /* Description */
+  .desc-wrap {
+    position: relative;
+    max-height: 80px;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .desc-wrap.expanded { max-height: 300px; }
+  .desc-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 32px;
+    background: linear-gradient(transparent, #0d0d0d);
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .desc-wrap.expanded::after { opacity: 0; }
+
+  .desc {
+    font-size: 11.5px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.45);
+    font-weight: 300;
+  }
+
+  /* CTA */
+  .cta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    gap: 10px;
+  }
+
+  .btn-read {
+    flex: 1;
+    padding: 11px 18px;
+    background: linear-gradient(135deg, #b4922e, #d4a83a);
+    border: none;
+    border-radius: 100px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(180,145,55,0.3);
+  }
+  .btn-read::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s;
+  }
+  .btn-read:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(180,145,55,0.45); }
+  .btn-read:hover::after { background: rgba(255,255,255,0.08); }
+  .btn-read:active { transform: translateY(0); }
+
+  .btn-icon {
+    width: 40px; height: 40px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    color: rgba(255,255,255,0.4);
+    font-size: 16px;
+  }
+  .btn-icon:hover { border-color: rgba(180,145,55,0.5); background: rgba(180,145,55,0.08); color: #d4a83a; }
+
+  /* Price tag */
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-top: 12px;
+  }
+  .price-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.3);
+  }
+  .price-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: #e8d08a;
+    letter-spacing: -0.01em;
+  }
+  .price-note {
+    font-size: 9px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.06em;
+  }
+
+  /* Limited badge */
+  .limited {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-top: 6px;
+  }
+  .limited::before {
+    content: '';
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: #b4922e;
+    animation: blink 2s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%,100% { opacity: 1; } 50% { opacity: 0.3; }
+  }
+</style>
 </head>
-
 <body>
-    <div class="parent">
-        <div class="secondparent">
-            <div class="car">
-                <link rel="stylesheet" href="chiron-sport-og.jpg">
-                <div class="specificity_1">
-                    <p>Hypercar</p>
-                </div>
-                <div class="specificity_2">
-                    <p>Luxury</p>
-                </div>
-                <div class="heading">
-                    <h1>Bugatti Chiron</h1>
-                </div>
-                <div class="about">
-                    <p>
-                        The Bugatti Chiron is a mid-engine two-seater sports car that epitomizes luxury and high
-                        performance. Introduced as the successor to the Veyron, the Chiron boasts an 8.0-liter
-                        quad-turbocharged W16 engine, delivering an impressive 1,479 horsepower (1,500 PS) and 1,600 Nm
-                        of torque. This powerhouse enables the Chiron to accelerate from 0 to 100 km/h in just 2.5
-                        seconds, with an electronically limited top speed of 420 km/h (261 mph). ​
-                    </p>  
-                    <p>
-                        In India, the Bugatti Chiron is expected to be priced starting at approximately ₹19.21 crore.
-                        However, due to import duties and customization options, the on-road price can be significantly
-                        higher. The Chiron is available in multiple variants, including the standard Chiron, Chiron
-                        Sport, and Chiron Super Sport, each offering unique features and performance enhancements. ​
-                    </p>
-                    <p>
-                        Production of the Chiron is limited to 500 units globally, making it an exclusive and highly
-                        sought-after vehicle among automotive enthusiasts. Its combination of cutting-edge engineering,
-                        luxurious craftsmanship, and record-breaking performance solidifies the Bugatti Chiron's status
-                        as an iconic hypercar in the automotive world
+<div class="scene">
+  <div class="glow-bg"></div>
+  <div class="card">
 
-                    </p>
-                </div>
-                <div class="scroll">
-                    <p>
-                        Scroll to Read More
-                    </p>
-                </div>
-            </div>
-        </div>
+    <!-- Image Zone -->
+    <div class="image-zone">
+      <img class="car-img"
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Bugatti_Chiron_-_Flickr_-_Alexandre_Prévot_%282%29_%28cropped%29.jpg/1200px-Bugatti_Chiron_-_Flickr_-_Alexandre_Prévot_%282%29_%28cropped%29.jpg"
+        alt="Bugatti Chiron"
+        onerror="this.style.background='linear-gradient(135deg,#1a1a1a,#2a1f0a)';this.style.display='block'"
+      />
+      <div class="image-fade"></div>
+      <div class="badges">
+        <div class="badge badge-hyper">Hypercar</div>
+        <div class="badge badge-luxury">Luxury</div>
+      </div>
     </div>
-</body>
 
+    <!-- Content -->
+    <div class="content">
+      <div class="brand">Bugatti · France</div>
+      <div class="title">Bugatti <span>Chiron</span></div>
+
+      <!-- Stats -->
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-val">1,479<span class="stat-unit"> hp</span></div>
+          <div class="stat-label">Power</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val">2.5<span class="stat-unit">s</span></div>
+          <div class="stat-label">0–100 km/h</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val">420<span class="stat-unit"> km/h</span></div>
+          <div class="stat-label">Top Speed</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Description -->
+      <div class="desc-wrap" id="descWrap">
+        <div class="desc">
+          The Chiron is powered by an 8.0-litre quad-turbocharged W16 engine delivering 1,479 hp and 1,600 Nm of torque. Successor to the legendary Veyron, it reaches 100 km/h in just 2.5 seconds. Limited to 500 units worldwide, each hand-built in Molsheim — an engineering marvel draped in bespoke leather, machined aluminium, and relentless speed.
+        </div>
+      </div>
+
+      <!-- Price -->
+      <div class="price-row">
+        <span class="price-label">Starting at</span>
+        <span class="price-val">₹19.21 Cr</span>
+        <span class="price-note">ex-showroom (India)</span>
+      </div>
+      <div class="limited">500 units · Limited production</div>
+
+      <!-- CTA -->
+      <div class="cta-row">
+        <button class="btn-read" id="readBtn" onclick="toggleRead()">Scroll to Read More</button>
+        <div class="btn-icon" title="Bookmark">♡</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let expanded = false;
+  function toggleRead() {
+    expanded = !expanded;
+    const wrap = document.getElementById('descWrap');
+    const btn = document.getElementById('readBtn');
+    if (expanded) {
+      wrap.classList.add('expanded');
+      btn.textContent = 'Show Less';
+    } else {
+      wrap.classList.remove('expanded');
+      btn.textContent = 'Scroll to Read More';
+    }
+  }
+</script>
+</body>
 </html>
